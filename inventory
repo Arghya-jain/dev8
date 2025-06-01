@@ -1,2 +1,0 @@
-[appservers]
-127.0.1.1 ansible_user=css014
