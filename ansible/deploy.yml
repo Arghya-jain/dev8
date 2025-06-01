@@ -1,0 +1,20 @@
+- name: Deploy Maven App Locally
+  hosts: local
+  become: yes
+
+  tasks:
+    - name: Ensure curl is installed
+      apt:
+        name: curl
+        state: present
+        update_cache: yes
+
+    - name: Copy built JAR to /opt/app
+      copy:
+        src: target/dev8-1.0-SNAPSHOT.jar
+        dest: /opt/app/dev8.jar
+        mode: '0755'
+
+    - name: Run the application in background
+      shell: |
+        nohup java -jar /opt/app/dev8.jar > /opt/app/app.log 2>&1 &
