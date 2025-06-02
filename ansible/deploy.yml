@@ -1,15 +1,30 @@
+---
 - name: Deploy Maven App Locally
-  hosts: local
-  become: true
-
+  hosts: localhost
+  become: yes
   tasks:
+
     - name: Ensure curl is installed
       apt:
         name: curl
         state: present
         update_cache: yes
 
+    - name: Create /opt directory if it doesn't exist
+      file:
+        path: /opt
+        state: directory
+        mode: '0755'
+
     - name: Copy jar to /opt/app.jar
       copy:
-        src: target/dev8-1.0-SNAPSHOT.jar
+        src: /var/lib/jenkins/workspace/dev8/target/dev8-1.0-SNAPSHOT.jar
         dest: /opt/app.jar
+        remote_src: yes
+
+    - name: Run the jar file in background
+      shell: |
+        nohup java -jar /opt/app.jar > /opt/app.log 2>&1 &
+      args:
+        executable: /bin/bash
+
