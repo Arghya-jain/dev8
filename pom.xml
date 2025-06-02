@@ -22,7 +22,7 @@
 
   <build>
     <plugins>
-      <!-- Compiler plugin -->
+      <!-- Compiler plugin configuration -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -33,7 +33,7 @@
         </configuration>
       </plugin>
 
-      <!-- Jar plugin to add Main-Class manifest -->
+      <!-- Jar plugin with main class manifest -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -48,5 +48,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>
