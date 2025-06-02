@@ -9,12 +9,7 @@
         state: present
         update_cache: yes
 
-    - name: Copy built JAR to /opt/app
+    - name: Copy jar to /opt/app.jar
       copy:
         src: target/dev8-1.0-SNAPSHOT.jar
-        dest: /opt/app/dev8.jar
-        mode: '0755'
-
-    - name: Run the application in background
-      shell: |
-        nohup java -jar /opt/app/dev8.jar > /opt/app/app.log 2>&1 &
+        dest: /opt/app.jar
