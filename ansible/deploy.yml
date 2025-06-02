@@ -1,9 +1,11 @@
 ---
 - name: Deploy Maven App Locally
   hosts: localhost
-  become: yes
-  tasks:
+  become: true
+  vars:
+    jar_path: "/home/css014/.jenkins/workspace/dev8/target/dev8-1.0-SNAPSHOT.jar"
 
+  tasks:
     - name: Ensure curl is installed
       apt:
         name: curl
@@ -18,13 +20,13 @@
 
     - name: Copy jar to /opt/app.jar
       copy:
-        src: /var/lib/jenkins/workspace/dev8/target/dev8-1.0-SNAPSHOT.jar
+        src: "{{ jar_path }}"
         dest: /opt/app.jar
         remote_src: yes
 
-    - name: Run the jar file in background
-      shell: |
-        nohup java -jar /opt/app.jar > /opt/app.log 2>&1 &
-      args:
-        executable: /bin/bash
+    - name: Run the jar with java (in background)
+      shell: "nohup java -jar /opt/app.jar > /opt/app.log 2>&1 &"
+      async: 30
+      poll: 0
+
 
